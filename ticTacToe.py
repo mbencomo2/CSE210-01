@@ -1,9 +1,16 @@
+#Ti-Tac-Toe of any Size (TTTS) by Matthew Bencomo
+#CSE210, BYU Idaho, Fall 2022 Semester
 from sys import exit
 
 
 def main():
-    '''Main program logic and game loop'''
-    print(f'\nWelcome to Tic-Tac-Toe! The only winning move is not playing!')
+    '''
+    Main program logic and game loop
+    
+    pramaters: none
+    return: none
+    '''
+    print(f'\nWelcome to Tic-Tac-Toe! The only winning move is not playing.')
     # Try/except is used to validate user input, ensuring we catch if the user fails to imput an integer.
     while True:
         try:
@@ -11,9 +18,9 @@ def main():
                 input(
                     '\nPlease enter the numer of rows to play.\nThree is normal, while other sizes are experimental: '
                 ))
-            if size > 3:
+            if size < 3:
                 print(
-                    'You cannot play a game of Tic-Tac-Toe with less than 9 spaces silly!'
+                    'You cannot play a game of Tic-Tac-Toe with less than 9 spaces silly! I warned you.'
                 )
             # Set up the game state for the first turn
             game_board = create_board(size)
@@ -33,9 +40,13 @@ def main():
 
 def create_board(size: int) -> dict:
     '''
-  Creates a dictionary where each row is a key:value pair, where the number of keys equals 'size' 
-  and the number of elements equals 'size'.
-  '''
+    Creates a dictionary where each row is a key:value pair, where the number of keys equals 'size' 
+    and the number of elements equals 'size'.
+    
+    parameters:
+        size: the dimension of the board, for both rows and columns since it is a square
+    return: reference to board dict
+    '''
     board = {}
     row = []
     ROW_INDEX = 0
@@ -53,12 +64,12 @@ def create_board(size: int) -> dict:
 
 def draw_game_area(board: dict):
     '''
-  Draw the game board, with fancy spacing characters.
+    Draw the game board, with fancy spacing characters.
 
-  parameters:
-    board: a dictionary that contains the game state
-  return: none
-  '''
+    parameters:
+        board: a dictionary that contains the game state
+    return: none
+    '''
     line = ''
     spacer = ''
     size = len(board)
@@ -87,12 +98,12 @@ def draw_game_area(board: dict):
 
 def get_player(player: str = '') -> str:
     '''
-  Returns the next player to make a move.
-  
-  parameters:
-    player: the previous player, the default empty string results in 'x' starting first
-  return: player string ('x' or 'o')
-  '''
+    Returns the next player to make a move.
+    
+    parameters:
+        player: the previous player, the default empty string results in 'x' starting first
+    return: player string ('x' or 'o')
+    '''
     if player == '' or player == 'o':
         return 'x'
     else:
@@ -101,14 +112,14 @@ def get_player(player: str = '') -> str:
 
 def get_player_input(board: dict, player) -> bool:
     '''
-  Gets the player's input and stores it in the board. This function also
-  allows the user to end the game by returning a bool when END is typed.
+    Gets the player's input and stores it in the board. This function also
+    allows the user to end the game by returning a bool when END is typed.
 
-  parameters:
-    board: a dictionary that contains the game state
-    player: the current player, as a string
-  return: bool (True)
-  '''
+    parameters:
+        board: a dictionary that contains the game state
+        player: the current player, as a string
+    return: bool (True)
+    '''
     max = len(board)**2
     while True:
         try:
@@ -132,13 +143,13 @@ def get_player_input(board: dict, player) -> bool:
 
 def is_game_over(board: dict) -> bool:
     '''
-  Checks the rows, then columns, then diagonal for a tic-tac-toe
+    Checks the rows, then columns, then diagonal for a tic-tac-toe
 
-  parameters:
-    board: dictionary containing the game state
-    player: the current player
-  return: bool
-  '''
+    parameters:
+        board: dictionary containing the game state
+        player: the current player
+    return: bool
+    '''
     size = len(board)
     # Check rows
     for key in board.keys():
@@ -174,7 +185,7 @@ def is_game_over(board: dict) -> bool:
             print(f'\nThat is the game! {diagonal[0]} wins.')
             draw_game_area(board)
             return True
-    # Recreate the diagonal list with indexes for the diagonal
+    # Recreate the diagonal list with indexes for the second diagonal
     diagonal = []
     for x in range(size):
         diagonal.append((size - 1) * (x + 1))
@@ -191,12 +202,12 @@ def is_game_over(board: dict) -> bool:
 
 def is_draw(board: dict) -> bool:
     '''
-  Checks to make sure all the cells are filled, before declaring a draw.
-  
-  parameters:
-    board: dictionary containing game state
-  return: bool
-  '''
+    Checks to make sure all the cells are filled, before declaring a draw.
+    
+    parameters:
+        board: dictionary containing game state
+    return: bool
+    '''
     size = len(board)
     # Iterate through every ke:value pair and check if it has a player in it
     for key, value in board.items():
